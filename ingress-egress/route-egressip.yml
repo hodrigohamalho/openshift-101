@@ -1,10 +1,10 @@
 apiVersion: k8s.ovn.org/v1
 kind: EgressIP
 metadata:
-  name: frontend-egress-ip
+  name: egress-ip
 spec:
   egressIPs:
-  - 192.168.1.100
+  - 10.10.10.30
   namespaceSelector:
     matchLabels:
-      name: app-x-dev
+      kubernetes.io/metadata.name: app-x-dev
