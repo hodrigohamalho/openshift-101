@@ -5,31 +5,41 @@ Rodrigo Ramalho
 :sectnums:
 
 == Create namespace resource e quotas 
-
-	oc create -f namespace/namespace.yml
-	oc create -f namespace/resource-quota.yml
-	oc create -f namespace/limit-range.yml
+```
+oc create -f namespace/namespace.yml
+oc create -f namespace/resource-quota.yml
+oc create -f namespace/limit-range.yml
+```
 
 == Egress IP 
 
 . Deploy nodeJS application. 
 . Inside the `Terminal` in the NodeJS application run: 
-
-	curl -4 https://api.ipify.org
+```
+curl -4 https://api.ipify.org
+```
 
 . Get the IP. 
 . Check if the nodes has the label `egress-assignable`
-
-	oc get nodes -L k8s.ovn.org/egress-assignable
+```
+oc get nodes -L k8s.ovn.org/egress-assignable
+```
 
 . If yes, let's create the egressip route. Change the IP for a IP that is valid for your network
-	oc create -f ingress-egress/route-egressip.yml
+
+```
+oc create -f ingress-egress/route-egressip.yml
+```
+
 . Useful commands 
-	# List nodes
-	oc get nodes -o wide
-	# Check if node is available
-	oc get node worker-cluster-2n6cl-3 -o json | jq '.metadata.labels | has("k8s.ovn.org/egress-assignable")'
+```
+# List nodes
+oc get nodes -o wide
+# Check if node is available
+oc get node worker-cluster-2n6cl-3 -o json | jq '.metadata.labels | has("k8s.ovn.org/egress-assignable")'
+```
+
 . Check if `OVNKubernetes ` is in use.
 ```
-	oc get network.config.openshift.io cluster -o jsonpath='{.status.networkType}{"\n"}'
+oc get network.config.openshift.io cluster -o jsonpath='{.status.networkType}{"\n"}'
 ```
