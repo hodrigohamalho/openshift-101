@@ -1,0 +1,11 @@
+apiVersion: tempo.grafana.com/v1alpha1
+kind: TempoStack
+metadata:
+  name: tempo
+  namespace: tempo
+spec:
+  size: 1x.extra-small
+  storage:
+    secret:
+      name: tempo-storage
+      type: s3

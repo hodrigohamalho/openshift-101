@@ -1,0 +1,15 @@
+# Controla quanto o namespace pode consumir no total
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: app-x-dev-quota
+  namespace: app-x-dev
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "20"
+    services: "10"
+    persistentvolumeclaims: "5"
