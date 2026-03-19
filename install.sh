@@ -4,25 +4,20 @@
 ## Red Hat build of OpenTelemetry
 ## Tempo Operator
 
-# Create project 
-oc new-project istio-system
-oc new-project istio-cni
+# Create projects
+oc create -f namespaces/istio-system-namespace.yml
+oc create -f namespaces/istio-cni-namespace.yml
+oc create -f namespaces/bookinfo-namespace.yml
+oc create -f namespaces/istio-ztunnel-namespace.yml
 
 # Minimum deployment requires Istio and IstioCNI 
-oc create -f istio-ingress-gateway.yml
+oc create -f service-mesh/istio-cni.yml
+oc create -f service-mesh/istio.yml
 
 # Deploy Application 
-
 ## Create project bookinfo
-oc new-project bookinfo
-
-## Create labels to istio discovery and injection 
-oc label namespace bookinfo istio-discovery=enabled
-oc label namespace bookinfo istio-injection=enabled
-
-## Deploy bookinfo sample application
-oc apply -n bookinfo -f https://raw.githubusercontent.com/openshift-service-mesh/istio/release-1.26/samples/bookinfo/platform/kube/bookinfo.yaml
-oc apply -n bookinfo -f https://raw.githubusercontent.com/openshift-service-mesh/istio/release-1.26/samples/bookinfo/platform/kube/bookinfo-versions.yaml
+oc apply -n bookinfo -f service-mesh/bookinfo.yaml
+oc apply -n bookinfo -f service-mesh/bookinfo-versions.yaml
 
 #Verifica que esta sem sidecar 
 oc get pods -n bookinfo
@@ -32,7 +27,6 @@ oc -n bookinfo rollout restart deployments
 
 #Verifica sidecar rodando 
 oc get pods -n bookinfo
-
 
 oc create -f bookinfo-app/bookinfo-gateway.yml
 oc create -f bookinfo-app/bookinfo-igw.yml 

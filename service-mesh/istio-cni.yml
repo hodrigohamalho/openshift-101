@@ -5,3 +5,4 @@ metadata:
   namespace: istio-cni
 spec:
   namespace: istio-cni
+  profile: ambient

@@ -1,8 +1,7 @@
 apiVersion: v1
 kind: Namespace 
 metadata:
-  name: app-x-dev
+name: istio-system
   labels:
     environment: dev
-    owner: team-a
-    cost-center: digital-banking
+    istio-discovery: enabled
